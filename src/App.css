@@ -1,0 +1,19 @@
+.button-link {
+  padding: 1em;
+  margin: 0.25em;
+  cursor: pointer;
+  border: 1px solid black;
+}
+.button-link:hover {
+  background: #eee;
+}
+.header {
+  background: rgba(255, 255, 255, 0)
+}
+.dropdown {
+  background: #eee;
+  margin: 0.25em;
+  padding: 0.25em;
+  width: 200px;
+  font-size: 1.1em;
+}

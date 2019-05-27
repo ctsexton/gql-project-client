@@ -1,36 +1,32 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import SongList from './components/SongList';
+import SongDropdown from './components/SongDropdown';
 
 const GET_SONGS = gql`
   query songList {
     songs {
-      id
       name
+      id
       artist {
         name
-      }
-      collaborators {
-        artist {
-          name
-        }
-        share
       }
     }
   }
 `;
 
-export default function Songs() {
+function SelectSong() {
   return (
     <Query query={GET_SONGS}>
       {({ data, loading, error }) => {
         if (loading) return <p>Loading!</p>;
         if (error) return <p>ERROR</p>;
         return (
-          <SongList songs={data.songs} />
+          <SongDropdown songs={data.songs} />
         )
       }}
     </Query>
   )
 };
+
+export default SelectSong;

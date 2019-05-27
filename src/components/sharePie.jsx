@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 
 function draw(node, data) {
   const selectedNode = d3.select(node);
+  selectedNode.selectAll('svg > *').remove();
 
   const pie = d3.pie().value(d => d.value);
   const sections = pie(data);
