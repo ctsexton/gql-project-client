@@ -28,7 +28,7 @@ class SongDetails extends Component {
     const { song } = this.props;
     return (
       <div>
-        <h3><b>Song Title: </b>{song.name}</h3>
+        <p><b>Song Title: </b>{song.name}</p>
         <p><b>Primary Artist: </b>{song.artist.name}</p>
         <h5>Collaborator Split:</h5>
         <svg ref={ node => { this.node = node } } ></svg>

@@ -17,15 +17,18 @@ const GET_SONGS = gql`
 
 function SelectSong() {
   return (
-    <Query query={GET_SONGS}>
-      {({ data, loading, error }) => {
-        if (loading) return <p>Loading!</p>;
-        if (error) return <p>ERROR</p>;
-        return (
-          <SongDropdown songs={data.songs} />
-        )
-      }}
-    </Query>
+    <div>
+      <h4>Select A Song</h4>
+      <Query query={GET_SONGS}>
+        {({ data, loading, error }) => {
+          if (loading) return <p>Loading!</p>;
+          if (error) return <p>ERROR</p>;
+          return (
+            <SongDropdown songs={data.songs} />
+          )
+        }}
+      </Query>
+    </div>
   )
 };
 
