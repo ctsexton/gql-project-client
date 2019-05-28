@@ -13,20 +13,14 @@ class SelectSong extends Component {
           environment={environment}
           query={graphql`
             query SongViewerQuery {
-              songs {
-                name
-                id
-                artist {
-                  name
-                }
-              }
+              ...SongSelector_songs
             }
           `}
           render={({ error, props }) => {
             if (error) return <p>ERROR</p>;
             if (!props) return <p>Loading...</p>;
             return (
-              <SongSelector songs={props.songs} />
+              <SongSelector songs={props} />
             )
           }}
         />

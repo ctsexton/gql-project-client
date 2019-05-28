@@ -18,9 +18,9 @@ export default function Songs() {
       if (error) return <p>ERROR</p>;
       if (!props) return <p>Loading!</p>;
       const { songs } = props;
-      const list = songs.map(song => {
+      const list = songs.map((song, index) => {
         return (
-          <li key={song.name} style={{listStyleType: "none"}}>
+          <li key={index} style={{listStyleType: "none"}}>
             <SongDetails song={song} />
           </li>
         )

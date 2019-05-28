@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { QueryRenderer} from 'react-relay';
+import { createFragmentContainer, QueryRenderer} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import SongDetails from './SongDetails';
 import environment from '../environment';
@@ -28,7 +28,8 @@ class SongSelector extends Component {
   }
 
   render() {
-    const { songs } = this.props;
+    // Very strange. Due to using songs in fragment.
+    const { songs } = this.props.songs;
     const list = songs.map(song => <option key={song.name} data-id={song.id}>{song.name}</option>);
     return (
       <div>
@@ -51,7 +52,6 @@ class SongSelector extends Component {
                 render={({ error, props }) => {
                   if (error) return <p>ERROR</p>;
                   if (!props) return <p>Loading!</p>;
-                  console.log("PROPS", props);
                   return (
                     <SongDetails song={props.song} />
                   )
@@ -66,4 +66,15 @@ class SongSelector extends Component {
   }
 };
 
- export default SongSelector;
+// export default SongSelector;
+export default createFragmentContainer(
+  SongSelector,
+  graphql`
+    fragment SongSelector_songs on Query {
+      songs {
+        id
+        name
+      }
+    }
+  `
+);
