@@ -4,7 +4,7 @@ import graphql from 'babel-plugin-relay/macro';
 import SongDetails from './SongDetails';
 import environment from '../environment';
 
-class SongDropdown extends Component {
+class SongSelector extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,7 +41,7 @@ class SongDropdown extends Component {
               <QueryRenderer
                 environment={environment}
                 query={graphql`
-                  query SongDropdownQuery($id: String) {
+                  query SongSelectorQuery($id: String) {
                     song(id: $id) {
                       ...SongDetails_song
                     }
@@ -66,4 +66,4 @@ class SongDropdown extends Component {
   }
 };
 
- export default SongDropdown;
+ export default SongSelector;

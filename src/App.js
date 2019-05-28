@@ -4,7 +4,7 @@ import Songs from './Songs';
 import Artists from './Artists';
 import Add from './Add';
 import Header from './components/Header';
-import SelectSong from './SelectSong';
+import SongViewer from './SongViewer';
 import './App.css';
 
 class App extends Component {
@@ -13,7 +13,7 @@ class App extends Component {
       <Router>
         <Header />
         <div>
-          <Route exact path="/" component={SelectSong} />
+          <Route exact path="/" component={SongViewer} />
           <Route path="/songs" component={Songs} />
           <Route path="/add" component={Add} />
           <Route path="/artists" component={Artists} />

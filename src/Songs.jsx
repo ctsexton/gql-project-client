@@ -9,17 +9,7 @@ export default function Songs() {
     <QueryRenderer query={
       graphql`query SongsQuery {
         songs {
-          id
-          name
-          artist {
-            name
-          }
-          collaborators {
-            artist {
-              name
-            }
-            share
-          }
+          ...SongDetails_song
         }
       }
     `}

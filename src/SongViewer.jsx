@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { QueryRenderer} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import SongDropdown from './components/SongDropdown';
+import SongSelector from './components/SongSelector';
 import environment from './environment';
 
 class SelectSong extends Component {
@@ -12,7 +12,7 @@ class SelectSong extends Component {
         <QueryRenderer
           environment={environment}
           query={graphql`
-            query SelectSongQuery {
+            query SongViewerQuery {
               songs {
                 name
                 id
@@ -26,7 +26,7 @@ class SelectSong extends Component {
             if (error) return <p>ERROR</p>;
             if (!props) return <p>Loading...</p>;
             return (
-              <SongDropdown songs={props.songs} />
+              <SongSelector songs={props.songs} />
             )
           }}
         />
