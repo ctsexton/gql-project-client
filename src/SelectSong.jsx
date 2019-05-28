@@ -1,33 +1,34 @@
 import React from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import { QueryRenderer} from 'react-relay';
+import graphql from 'babel-plugin-relay/macro';
 import SongDropdown from './components/SongDropdown';
-
-const GET_SONGS = gql`
-  query songList {
-    songs {
-      name
-      id
-      artist {
-        name
-      }
-    }
-  }
-`;
+import environment from './environment';
 
 function SelectSong() {
   return (
     <div>
       <h4>Select A Song</h4>
-      <Query query={GET_SONGS}>
-        {({ data, loading, error }) => {
-          if (loading) return <p>Loading!</p>;
+      <QueryRenderer
+        environment={environment}
+        query={graphql`
+          query SelectSongQuery {
+            songs {
+              name
+              id
+              artist {
+                name
+              }
+            }
+          }
+        `}
+        render={({ error, props }) => {
           if (error) return <p>ERROR</p>;
+          if (!props) return <p>Loading...</p>;
           return (
-            <SongDropdown songs={data.songs} />
+            <SongDropdown songs={props.songs} />
           )
         }}
-      </Query>
+      />
     </div>
   )
 };

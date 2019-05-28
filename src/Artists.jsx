@@ -1,29 +1,29 @@
 import React from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
-
-const GET_ARTISTS = gql`
-  query artists {
-    artists {
-      name
-    }
-  }
-`;
+import { QueryRenderer } from 'react-relay';
+import graphql from 'babel-plugin-relay/macro';
+import environment from './environment';
 
 export default function Artists() {
   return (
-    <Query query={GET_ARTISTS}>
-      {({ data, loading, error }) => {
-        if (loading) return <p>Loading!</p>;
-        if (error) return <p>ERROR</p>;
-        const list = data.artists.map(artist => <li>{artist.name}</li>)
-        return (
-          <ul>
-            {list}
-          </ul>
-        )
-      }}
-    </Query>
+    <QueryRenderer query={
+      graphql`query ArtistsQuery {
+        artists {
+          name
+        }
+      }
+    `}
+    environment={environment}
+    render={({ error, props }) => {
+      if (error) return <p>ERROR</p>;
+      if (!props) return <p>Loading!</p>;
+      const list = props.artists.map(artist => <li>{artist.name}</li>)
+      return (
+        <ul>
+          {list}
+        </ul>
+      )
+    }}
+    />
   )
 };
 

@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "react-scripts start",
+    "relay": "relay-compiler --src ./src --schema ./schema.graphql --extensions js jsx",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -21,6 +22,7 @@
     "react": "^16.8.6",
     "react-apollo": "^2.5.6",
     "react-dom": "^16.8.6",
+    "react-relay": "^4.0.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "^3.0.1"
   },
@@ -35,5 +37,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-plugin-relay": "^2.0.0-rc.2",
+    "relay-compiler": "^4.0.0"
   }
 }

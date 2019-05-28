@@ -1,36 +1,36 @@
 import React from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import { QueryRenderer} from 'react-relay';
+import graphql from 'babel-plugin-relay/macro';
 import SongList from './components/SongList';
-
-const GET_SONGS = gql`
-  query songList {
-    songs {
-      id
-      name
-      artist {
-        name
-      }
-      collaborators {
-        artist {
-          name
-        }
-        share
-      }
-    }
-  }
-`;
+import environment from './environment';
 
 export default function Songs() {
   return (
-    <Query query={GET_SONGS}>
-      {({ data, loading, error }) => {
-        if (loading) return <p>Loading!</p>;
-        if (error) return <p>ERROR</p>;
-        return (
-          <SongList songs={data.songs} />
-        )
-      }}
-    </Query>
+    <QueryRenderer query={
+      graphql`query SongsQuery {
+        songs {
+          id
+          name
+          artist {
+            name
+          }
+          collaborators {
+            artist {
+              name
+            }
+            share
+          }
+        }
+      }
+    `}
+    environment={environment}
+    render={({ error, props }) => {
+      if (error) return <p>ERROR</p>;
+      if (!props) return <p>Loading!</p>;
+      return (
+        <SongList songs={props.songs} />
+      )
+    }}
+    />
   )
 };

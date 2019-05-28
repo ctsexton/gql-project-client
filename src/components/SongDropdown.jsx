@@ -1,25 +1,8 @@
 import React, { Component } from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import { QueryRenderer} from 'react-relay';
+import graphql from 'babel-plugin-relay/macro';
 import SongDetails from './SongDetails';
-
-const GET_SONG = gql`
-  query song($id: String) {
-    song(id: $id) {
-      id
-      name
-      artist {
-        name
-      }
-      collaborators {
-        artist {
-          name
-        }
-        share
-      }
-    }
-  }
-`;
+import environment from '../environment';
 
 class SongDropdown extends Component {
   constructor(props) {
@@ -37,7 +20,6 @@ class SongDropdown extends Component {
         selected = node.getAttribute('data-id');
       }
     };
-    console.log(selected);
     if (selected === '---') {
       this.setState({ selectedSong: null })
     } else {
@@ -56,15 +38,35 @@ class SongDropdown extends Component {
         </select>
         <div>
           {this.state.selectedSong ?
-              <Query query={GET_SONG} variables={{ id: this.state.selectedSong }}>
-                {({ data, loading, error }) => {
-                  if (loading) return <p>Loading!</p>;
-                  if (error) {console.log(error); return <p>ERROR</p>};
+              <QueryRenderer
+                environment={environment}
+                query={graphql`
+                  query SongDropdownQuery($id: String) {
+                    song(id: $id) {
+                      id
+                      name
+                      artist {
+                        name
+                      }
+                      collaborators {
+                        artist {
+                          name
+                        }
+                        share
+                      }
+                    }
+                  }
+                `}
+                variables={{ id: this.state.selectedSong }}
+                render={({ error, props }) => {
+                  if (error) return <p>ERROR</p>;
+                  if (!props) return <p>Loading!</p>;
+                  console.log("PROPS", props);
                   return (
-                    <SongDetails song={data.song} />
+                    <SongDetails song={props.song} />
                   )
                 }}
-              </Query>
+              />
               :
               'No current selection'
           }
