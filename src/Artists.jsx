@@ -9,6 +9,9 @@ export default function Artists() {
       graphql`query ArtistsQuery {
         artists {
           name
+          songs {
+            name
+          }
         }
       }
     `}
@@ -16,11 +19,23 @@ export default function Artists() {
     render={({ error, props }) => {
       if (error) return <p>ERROR</p>;
       if (!props) return <p>Loading!</p>;
-      const list = props.artists.map(artist => <li>{artist.name}</li>)
+      const list = props.artists.map(artist => {
+        const songs = artist.songs.map(song => <li>{song.name}</li>)
+        return (
+          <li>
+            <p>{artist.name}</p>
+            <ul>{songs}</ul>
+          </li>
+        )
+      })
       return (
-        <ul>
-          {list}
-        </ul>
+        <div>
+          <h4>Artists & Songs</h4>
+          <p>(including collaborations)</p>
+          <ul>
+            {list}
+          </ul>
+        </div>
       )
     }}
     />

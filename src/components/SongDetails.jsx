@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { createFragmentContainer } from 'react-relay';
+import graphql from 'babel-plugin-relay/macro';
 import draw from './sharePie';
 
 class SongDetails extends Component {
@@ -37,4 +39,21 @@ class SongDetails extends Component {
   }
 };
 
-export default SongDetails;
+export default createFragmentContainer(
+  SongDetails,
+  graphql`
+    fragment SongDetails_song on Song {
+      id
+      name
+      artist {
+        name
+      }
+      collaborators {
+        artist {
+          name
+        }
+        share
+      }
+    }
+  `
+);

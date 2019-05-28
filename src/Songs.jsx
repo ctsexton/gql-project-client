@@ -1,7 +1,7 @@
 import React from 'react';
 import { QueryRenderer} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import SongList from './components/SongList';
+import SongDetails from './components/SongDetails';
 import environment from './environment';
 
 export default function Songs() {
@@ -27,8 +27,18 @@ export default function Songs() {
     render={({ error, props }) => {
       if (error) return <p>ERROR</p>;
       if (!props) return <p>Loading!</p>;
+      const { songs } = props;
+      const list = songs.map(song => {
+        return (
+          <li key={song.name} style={{listStyleType: "none"}}>
+            <SongDetails song={song} />
+          </li>
+        )
+      });
       return (
-        <SongList songs={props.songs} />
+        <ul>
+          {list}
+        </ul>
       )
     }}
     />

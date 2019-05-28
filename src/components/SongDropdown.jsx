@@ -43,17 +43,7 @@ class SongDropdown extends Component {
                 query={graphql`
                   query SongDropdownQuery($id: String) {
                     song(id: $id) {
-                      id
-                      name
-                      artist {
-                        name
-                      }
-                      collaborators {
-                        artist {
-                          name
-                        }
-                        share
-                      }
+                      ...SongDetails_song
                     }
                   }
                 `}
